@@ -455,9 +455,10 @@ returns `null` if the account is not a member of the buffer.
 otherwise returns:
 
 - **status:**
-  - **withdrawn:** the total withdrawn amount for the current user
+  - **withdrawn:** the total withdrawn amount for the current user (in wei)
   - **balance:** the total amount that can be withdrawn by the current user (in wei)
   - **balanceEth:** the **balance** calculated in ETH
+  - **withdrawnEth:** the total withdrawn amount for the current user, calculated in ETH
 
 #### example
 

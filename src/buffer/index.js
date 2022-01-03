@@ -248,10 +248,11 @@ class buffer {
       let balance = new BigNumber(totalReceived)
         .times(new BigNumber(value))
         .dividedBy(new BigNumber(10**12))
-        .minus(new BigNumber(withdrawn))
+        .minus(withdrawn)
       let balanceEth = balance.dividedBy(new BigNumber(Number(10**18).toString()))
+      let withdrawnEth = withdrawn.dividedBy(new BigNumber(Number(10**18).toString()))
       return {
-        withdrawn, balance, balanceEth
+        withdrawn, balance, balanceEth, withdrawnEth
       }
     } else {
       return null

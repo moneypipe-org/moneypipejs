@@ -85,7 +85,7 @@ describe('buffer', function() {
       console.log(key, status[key].toString())
     }
   })
-  it('status for a specific address', async () => {
+  it.only('status for a specific address', async () => {
     const BUFFER_ADDRESS = "0x66360Caf43A1ee1F1D0A2dc8D0246a86d9522539"
     let status = await buffer.status(
       BUFFER_ADDRESS,
@@ -95,7 +95,7 @@ describe('buffer', function() {
       console.log(key, status[key].toString())
     }
   })
-  it.only('status for a specific address that is not included', async () => {
+  it('status for a specific address that is not included', async () => {
     const BUFFER_ADDRESS = "0x66360Caf43A1ee1F1D0A2dc8D0246a86d9522539"
     let status = await buffer.status(BUFFER_ADDRESS, "0x1D6B99F94d0f9f95Ee3Aa8B9A8053EF2144c14aC")
     console.log("status", status)
