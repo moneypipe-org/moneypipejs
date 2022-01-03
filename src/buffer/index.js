@@ -238,18 +238,23 @@ class buffer {
     let totalReceived = await contract.methods.totalReceived().call()
     // payment
     const merklescript = await this.merklescript(contract_address)
-    let value = merklescript.values.filter((val) => {
+    let filtered = merklescript.values.filter((val) => {
       return val[0].toLowerCase() === account.toLowerCase()
     }).map((val) => {
       return val[1]
-    })[0]
-    let balance = new BigNumber(totalReceived)
-      .times(new BigNumber(value))
-      .dividedBy(new BigNumber(10**12))
-      .minus(new BigNumber(withdrawn))
-    let balanceEth = balance.dividedBy(new BigNumber(Number(10**18).toString()))
-    return {
-      withdrawn, balance, balanceEth
+    })
+    if (filtered.length > 0) {
+      let value = filtered[0]
+      let balance = new BigNumber(totalReceived)
+        .times(new BigNumber(value))
+        .dividedBy(new BigNumber(10**12))
+        .minus(new BigNumber(withdrawn))
+      let balanceEth = balance.dividedBy(new BigNumber(Number(10**18).toString()))
+      return {
+        withdrawn, balance, balanceEth
+      }
+    } else {
+      return null
     }
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////

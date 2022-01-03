@@ -450,6 +450,10 @@ let status = await buffer.status(buffer_address[, account])
 
 #### return values
 
+returns `null` if the account is not a member of the buffer.
+
+otherwise returns:
+
 - **status:**
   - **withdrawn:** the total withdrawn amount for the current user
   - **balance:** the total amount that can be withdrawn by the current user (in wei)
