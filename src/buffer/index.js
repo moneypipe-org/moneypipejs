@@ -76,6 +76,7 @@ class buffer {
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   async create(o) {
+    await this.checkNetwork()
     let { title, members } = o
     let total = 0;
     for(let member of members) {
@@ -173,6 +174,7 @@ class buffer {
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   async merkleproof(contract_address, account) {
+    await this.checkNetwork()
     if (!account) account = await this.current_account()
     const merklescript = await this.merklescript(contract_address)
     let value = merklescript.values.filter((val) => {
@@ -190,6 +192,7 @@ class buffer {
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   async status(contract_address, account) {
+    await this.checkNetwork()
     if (!account) account = await this.current_account()
     // withdrawn
     const contract = new this.web3.eth.Contract(buffer_abi, contract_address)
@@ -219,6 +222,7 @@ class buffer {
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   async withdraw(address) {
+    await this.checkNetwork()
     const contract = new this.web3.eth.Contract(buffer_abi, address)
     if (this.key) {
       const wallet = this.web3.eth.accounts.privateKeyToAccount("0x" + this.key)
@@ -259,6 +263,7 @@ class buffer {
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   async merklescript(contract_address) {
+    await this.checkNetwork()
     const factory = new this.web3.eth.Contract(factory_abi, constants.factory[this.network]);
     let logs = await factory.getPastEvents("ContractDeployed", {
       filter: { group: contract_address },
@@ -270,6 +275,12 @@ class buffer {
       return r.data.merklescript
     })
     return merklescript
+  }
+  async checkNetwork() {
+    let net = await this.web3.eth.net.getNetworkType()
+    if (net !== this.network) {
+      throw new Error(`Please sign into ${this.network} network`)
+    }
   }
 }
 module.exports = buffer

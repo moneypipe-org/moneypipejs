@@ -44,6 +44,7 @@ class stream {
   //
   ////////////////////////////////////////////////////////////////////////////////////////
   async create(o) {
+    await this.checkNetwork()
     let { title, members } = o
     // update total
     let total = 0;
@@ -83,6 +84,7 @@ class stream {
   //
   ////////////////////////////////////////////////////////////////////////////////////////
   async members(address) {
+    await this.checkNetwork()
     let contract = new this.web3.eth.Contract(stream_abi, address);
     let members = await contract.methods.members().call()
     return members.map((member) => {
@@ -92,6 +94,12 @@ class stream {
         total: parseInt(member.total)
       }
     })
+  }
+  async checkNetwork() {
+    let net = await this.web3.eth.net.getNetworkType()
+    if (net !== this.network) {
+      throw new Error(`Please sign into ${this.network} network`)
+    }
   }
 }
 module.exports = stream
