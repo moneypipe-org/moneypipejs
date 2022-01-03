@@ -1,0 +1,30 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.0-rc.0/web3.min.js"></script>
+<script src="/moneypipe.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const stream = new Moneypipe.stream({ web3: new Web3(window.ethereum) })
+  let r = await stream.members("0x05A9c70d7827c936c96896Da36676E81C878BFF0")
+  document.querySelector("pre").innerHTML = JSON.stringify(r, null, 2)
+  document.querySelector("#create").addEventListener("click", async (e) => {
+    let res = await stream.create({
+      title: document.querySelector("#title").value,
+      members: [{
+        account: "0xFb7b2717F7a2a30B42e21CEf03Dd0fC76Ef761E9",
+        value: 1
+      }, {
+        account: "0x73316d4224263496201c3420b36Cdda9c0249574",
+        value: 1
+      }]
+    })
+  })
+})
+</script>
+</head>
+<body>
+<pre></pre>
+<input type='text' id='title' placeholder='title'>
+<button id='create'>Create</button>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>moneypipe.js</title>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="moneypipe.js" />
+  <meta name="twitter:description" content="JavaScript library for splitting money on ethereum" />
+  <meta name="twitter:image" content="https://dev.moneypipe.xyz/pipe_poster.png" />
+  <meta property="og:url" content="https://dev.moneypipe.xyz" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="moneypipe" />
+  <meta property="og:description" content="JavaScript library for splitting money on ethereum" />
+  <meta property="og:image" content="https://dev.moneypipe.xyz/pipe_poster.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'moneypipe.js',
+      repo: 'https://github.com/moneypipe-org/moneypipejs',
+      maxLevel: 3,
+      themeColor: "cornflowerblue",
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        let el = document.querySelector("#" + location.hash.split("=")[1])
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({top: y});
+        }
+      }, 1500)
+    })
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+</body>
+</html>

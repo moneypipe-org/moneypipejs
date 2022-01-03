@@ -1,0 +1,53 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.0-rc.0/web3.min.js"></script>
+<script src="/moneypipe.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const buffer = new Moneypipe.buffer({
+    web3: new Web3(window.ethereum),
+    network: "rinkeby",
+    ipfs: async (json) => {
+      let cid = await fetch("https://microipfs.com/add", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          object: json
+        })
+      }).then((r) => {
+        return r.json()
+      }).then((r) => {
+        return r.success
+      })
+      return cid
+    }
+  })
+  let members = await buffer.members("0x66360Caf43A1ee1F1D0A2dc8D0246a86d9522539")
+  let status = await buffer.status("0x66360Caf43A1ee1F1D0A2dc8D0246a86d9522539")
+  let tree = await buffer.merkleproof("0x66360Caf43A1ee1F1D0A2dc8D0246a86d9522539")
+  document.querySelector("#members").innerHTML = JSON.stringify(members, null, 2)
+  document.querySelector("#status").innerHTML = JSON.stringify(status, null, 2)
+  document.querySelector("#tree").innerHTML = JSON.stringify(tree, null, 2)
+  document.querySelector("#create").addEventListener("click", async (e) => {
+    let res = await buffer.create({
+      title: document.querySelector("#title").value,
+      members: [{
+        account: "0xFb7b2717F7a2a30B42e21CEf03Dd0fC76Ef761E9",
+        value: 1
+      }, {
+        account: "0x73316d4224263496201c3420b36Cdda9c0249574",
+        value: 1
+      }]
+    })
+  })
+})
+</script>
+</head>
+<body>
+<pre id='members'></pre>
+<pre id='status'></pre>
+<pre id='tree'></pre>
+<input type='text' id='title' placeholder='title'>
+<button id='create'>Create</button>
+</body>
+</html>
