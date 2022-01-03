@@ -78,14 +78,14 @@ describe('buffer', function() {
     assert.equal(balanceAfter * 0.6, balanceFinal)
 
   })
-  it.only('status for current user', async () => {
+  it('status for current user', async () => {
     const BUFFER_ADDRESS = "0x66360Caf43A1ee1F1D0A2dc8D0246a86d9522539"
     let status = await buffer.status(BUFFER_ADDRESS)
     for(let key in status) {
       console.log(key, status[key].toString())
     }
   })
-  it.only('status for a specific address', async () => {
+  it('status for a specific address', async () => {
     const BUFFER_ADDRESS = "0x66360Caf43A1ee1F1D0A2dc8D0246a86d9522539"
     let status = await buffer.status(
       BUFFER_ADDRESS,

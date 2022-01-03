@@ -154,7 +154,7 @@ let groups = await stream.groups(owner_address)
 
 #### parameters
 
-- **owner_address:** the user address to query all owned streams from
+- **owner_address:** (optional) the user address to query all owned streams from. the current signed-in user address if not specified.
 
 #### return values
 
@@ -164,6 +164,8 @@ let groups = await stream.groups(owner_address)
   - **title:** the stream title
 
 #### example
+
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/75x6mzot/3/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 ---
 
@@ -309,7 +311,7 @@ let groups = await buffer.groups(owner_address)
 
 #### parameters
 
-- **owner_address:** the user address to query all owned buffers from
+- **owner_address:** the user address to query all owned buffers from. the current signed-in user address if not specified.
 
 #### return values
 
@@ -321,6 +323,7 @@ let groups = await buffer.groups(owner_address)
 
 #### example
 
+<iframe width="100%" height="600" src="//jsfiddle.net/skogard/tqrc8f1y/5/embedded/html,result/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 ### 2.4. members
 
