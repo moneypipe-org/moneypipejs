@@ -167,6 +167,33 @@ let groups = await stream.groups(owner_address)
 
 <iframe width="100%" height="500" src="//jsfiddle.net/skogard/75x6mzot/3/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
+### 1.5. get
+
+get a stream at address
+
+#### syntax
+
+Use the constructed stream object:
+
+```javascript
+let group = await stream.get(stream_address)
+```
+
+#### parameters
+
+- **stream_address:** the stream address.
+
+#### return values
+
+- **group:**
+  - **owner:** the owner address
+  - **group:** the stream address
+  - **title:** the stream title
+
+#### example
+
+
+
 ---
 
 ## 2. buffer
@@ -325,7 +352,33 @@ let groups = await buffer.groups(owner_address)
 
 <iframe width="100%" height="600" src="//jsfiddle.net/skogard/tqrc8f1y/5/embedded/html,result/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
-### 2.4. members
+### 2.4. get
+
+get a buffer at address
+
+#### syntax
+
+Use the constructed buffer object:
+
+```javascript
+let group = await buffer.get(buffer_address)
+```
+
+#### parameters
+
+- **buffer_address:** the buffer address.
+
+#### return values
+
+- **group:**
+  - **cid:**: IPFS CID at which the merkle tree is stored
+  - **owner:** the owner address
+  - **group:** the buffer address
+  - **title:** the buffer title
+
+#### example
+
+### 2.5. members
 
 get all members and their shares of a contract at `buffer_address`
 
@@ -356,7 +409,7 @@ let members = await buffer.members("0x05A9c70d7827c936c96896Da36676E81C878BFF0")
 
 <iframe width="100%" height="500" src="//jsfiddle.net/skogard/9z0vcqnr/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
-### 2.5. withdraw
+### 2.6. withdraw
 
 #### syntax
 
@@ -378,7 +431,7 @@ let { tx } = await buffer.withdraw(buffer_address)
 let { tx } = await buffer.withdraw("0x05A9c70d7827c936c96896Da36676E81C878BFF0")
 ```
 
-### 2.6. status
+### 2.7. status
 
 get the current balance of a user
 
@@ -412,7 +465,7 @@ for(let key in status) {
 
 <iframe width="100%" height="500" src="//jsfiddle.net/skogard/Lnk3hxgv/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
-### 2.7. merkleproof
+### 2.8. merkleproof
 
 Get the current user's share value in the merkle tree and its proof
 

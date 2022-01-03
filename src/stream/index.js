@@ -32,6 +32,7 @@ class stream {
   //
   ////////////////////////////////////////////////////////////////////////////////////////
   async groups(account) {
+    await this.checkNetwork()
     if (!account) account = await this.current_account()
     const factory = new this.web3.eth.Contract(factory_abi, constants.factory[this.network])
     let logs = await factory.getPastEvents("ContractDeployed", {
@@ -46,6 +47,29 @@ class stream {
         title: log.returnValues.title
       }
     })
+  }
+  ////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //    let group = await stream.get(stream_address)
+  //
+  ////////////////////////////////////////////////////////////////////////////////////////
+  async get(stream_address) {
+    await this.checkNetwork()
+    const factory = new this.web3.eth.Contract(factory_abi, constants.factory[this.network])
+    let logs = await factory.getPastEvents("ContractDeployed", {
+      filter: { group: stream_address },
+      fromBlock: 0,
+      toBlock  : "latest",
+    })
+    if (logs.length > 0) {
+      return {
+        owner: logs[0].returnValues.owner,
+        group: logs[0].returnValues.group,
+        title: logs[0].returnValues.title
+      }
+    } else {
+      throw new Error("stream does not exist at " + stream_address)
+    }
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   //
