@@ -1,4 +1,4 @@
-# introduction
+# moneypipe.js
 
 > JavaScript library for splitting money on ethereum
 
@@ -123,6 +123,10 @@ let members = await stream.members(contract_address)
   - **account:** user address
   - **value:** each account's share of the pie
   - **total:** the total amount
+
+#### example
+
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/sknqrgwb/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 ---
 
@@ -285,6 +289,8 @@ let members = await buffer.members(contract_address)
 let members = await buffer.members("0x05A9c70d7827c936c96896Da36676E81C878BFF0")
 ```
 
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/9z0vcqnr/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
 ### 2.4. withdraw
 
 #### syntax
@@ -339,6 +345,8 @@ for(let key in status) {
 }
 ```
 
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/Lnk3hxgv/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
 ### 2.6. merkleproof
 
 Get the current user's share value in the merkle tree and its proof
@@ -371,3 +379,5 @@ let { value, proof } = await buffer.merkleproof(
 )
 console.log(value, proof)
 ```
+
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/t978xonh/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
