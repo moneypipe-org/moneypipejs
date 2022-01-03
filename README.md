@@ -2,9 +2,22 @@
 
 > JavaScript library for splitting money on ethereum
 
-moneypipe is a collection of composable building blocks (smart contracts) for playing with money on ethereum.
+moneypipe is a collection of composable building blocks (smart contracts) for playing with money on ethereum. Basically you can create a custom address that represents a group, and simply send money to it, and the funds get auto-split to the members, either synchronously **(stream)** or asynchronously **(buffer)**.
 
-Basically you can create a custom address that represents a group, and simply send money to it, and the funds get auto-split to the members, either synchronously (stream) or asynchronously (buffer): 
+<br>
+<a class='btn' href="https://github.com/moneypipe-org/moneypipejs"><i class="fa-brands fa-github"></i> GitHub</a>
+<a class='btn' href="https://discord.gg/BZtp5F6QQM"><i class="fa-brands fa-discord"></i> Discord</a>
+<a class='btn' href="https://twitter.com/skogard"><i class="fa-brands fa-twitter"></i> Twitter</a>
+
+---
+
+# intro
+
+moneypipe is all about controlling the flow of money. there are currently 2 modules:
+
+1. stream
+2. buffer
+
 
 ## 1. stream (synchronous split)
 
@@ -175,7 +188,7 @@ The "ipfs" function can be implemented with [microipfs](https://github.com/facto
 
 In the browser:
 
-```javaascript
+```javascript
 const buffer = new Moneypipe.buffer({
   web3: new Web3(window.ethereum),
   ipfs: async (json) => {
