@@ -1,4 +1,4 @@
-# moneypipe.js
+# introduction
 
 > JavaScript library for splitting money on ethereum
 
