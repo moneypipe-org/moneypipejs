@@ -103,19 +103,19 @@ let { tx, address } = await stream.create({
 
 ### 1.3. members
 
-get all members and their shares of a contract at `contract_address`
+get all members and their shares of a contract at `stream_address`
 
 #### syntax
 
 Use the constructed stream object:
 
 ```javascript
-let members = await stream.members(contract_address)
+let members = await stream.members(stream_address)
 ```
 
 #### parameters
 
-- **contract_address:** the stream contract address to fetch the members from
+- **stream_address:** the stream contract address to fetch the members from
 
 #### return values
 
@@ -262,19 +262,19 @@ let { tx, address } = await buffer.create({
 
 ### 2.3. members
 
-get all members and their shares of a contract at `contract_address`
+get all members and their shares of a contract at `buffer_address`
 
 #### syntax
 
 Use the constructed stream object:
 
 ```javascript
-let members = await buffer.members(contract_address)
+let members = await buffer.members(buffer_address)
 ```
 
 #### parameters
 
-- **contract_address:** the contract address of the buffer to fetch the members from
+- **buffer_address:** the contract address of the buffer to fetch the members from
 
 #### return values
 
@@ -296,12 +296,12 @@ let members = await buffer.members("0x05A9c70d7827c936c96896Da36676E81C878BFF0")
 #### syntax
 
 ```javascript
-let { tx } = await buffer.withdraw(contract_address)
+let { tx } = await buffer.withdraw(buffer_address)
 ```
 
 #### parameters
 
-- **contract_address:** the address of the buffer contract to withdraw balance from
+- **buffer_address:** the address of the buffer contract to withdraw balance from
 
 #### return values
 
@@ -320,12 +320,12 @@ get the current balance of a user
 #### syntax
 
 ```javascript
-let status = await buffer.status(contract_address[, account])
+let status = await buffer.status(buffer_address[, account])
 ```
 
 #### parameters
 
-- **contract_address:** the buffer address
+- **buffer_address:** the buffer address
 - **account:** (optional) the account for which get the status. If omitted, the currently signed-in user.
 
 #### return values
