@@ -192,7 +192,7 @@ let group = await stream.get(stream_address)
 
 #### example
 
-
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/28wsjyrt/1/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 ---
 
@@ -377,6 +377,8 @@ let group = await buffer.get(buffer_address)
   - **title:** the buffer title
 
 #### example
+
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/gr83f74v/1/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 ### 2.5. members
 
