@@ -53,7 +53,7 @@ class buffer {
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(o) {
-    this.ipfs = (o.ipfs ? o.ipfs : ipfs); // use the default microipfs service if not specified
+    this.ipfs = o.ipfs;
     this.web3 = o.web3;
     this.key = o.key;
     this.network = (o.network ? o.network : "main");
