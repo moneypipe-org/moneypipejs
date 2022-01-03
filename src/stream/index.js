@@ -28,6 +28,27 @@ class stream {
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   //
+  //    let groups = await stream.groups(owner_address)
+  //
+  ////////////////////////////////////////////////////////////////////////////////////////
+  async groups(account) {
+    if (!account) account = await this.current_account()
+    const factory = new this.web3.eth.Contract(factory_abi, constants.factory[this.network])
+    let logs = await factory.getPastEvents("ContractDeployed", {
+      filter: { owner: account },
+      fromBlock: 0,
+      toBlock  : "latest",
+    })
+    return logs.map((log) => {
+      return {
+        owner: log.returnValues.owner,
+        group: log.returnValues.group,
+        title: log.returnValues.title
+      }
+    })
+  }
+  ////////////////////////////////////////////////////////////////////////////////////////
+  //
   //    await stream.create({
   //      title: "testing",
   //      members: [{
@@ -99,6 +120,16 @@ class stream {
     let net = await this.web3.eth.net.getNetworkType()
     if (net !== this.network) {
       throw new Error(`Please sign into ${this.network} network`)
+    }
+  }
+  async current_account() {
+    if (this.key) {
+      const wallet = this.web3.eth.accounts.privateKeyToAccount("0x" + this.key)
+      return wallet.address;
+    } else {
+      await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const accounts = await this.web3.eth.getAccounts()
+      return accounts[0]
     }
   }
 }
