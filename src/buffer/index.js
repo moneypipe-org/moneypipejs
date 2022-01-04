@@ -242,7 +242,8 @@ class buffer {
     let withdrawnStr = await contract.methods.withdrawn(account).call() 
     let withdrawn = new BigNumber(withdrawnStr);
     // total received
-    let totalReceived = await contract.methods.totalReceived().call()
+    let totalReceivedStr = await contract.methods.totalReceived().call()
+    let totalReceived = new BigNumber(totalReceivedStr)
     // payment
     const merklescript = await this.merklescript(contract_address)
     let filtered = merklescript.values.filter((val) => {
@@ -252,14 +253,14 @@ class buffer {
     })
     if (filtered.length > 0) {
       let value = filtered[0]
-      let balance = new BigNumber(totalReceived)
+      let balance = totalReceived
         .times(new BigNumber(value))
         .dividedBy(new BigNumber(10**12))
         .minus(withdrawn)
       let balanceEth = balance.dividedBy(new BigNumber(Number(10**18).toString()))
       let withdrawnEth = withdrawn.dividedBy(new BigNumber(Number(10**18).toString()))
       return {
-        withdrawn, balance, balanceEth, withdrawnEth
+        withdrawn, balance, balanceEth, withdrawnEth, totalReceived
       }
     } else {
       return null
