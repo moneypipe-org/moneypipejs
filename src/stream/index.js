@@ -153,6 +153,7 @@ class stream {
     }
   }
   async current_account() {
+    await this.checkNetwork()
     if (this.key) {
       const wallet = this.web3.eth.accounts.privateKeyToAccount("0x" + this.key)
       return wallet.address;
