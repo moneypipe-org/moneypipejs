@@ -12,6 +12,21 @@ moneypipe is a collection of composable building blocks (smart contracts) for pl
 
 ---
 
+# contracts
+
+Here are the factory contracts:
+
+- **rinkeby testnet**
+  - buffer: [0x6706c0452C82f1d57d25860A129627210438c075](https://rinkeby.etherscan.io/address/0x6706c0452C82f1d57d25860A129627210438c075#code)
+  - stream: [0x18fA6B478147aA7E2d50828251d57045fa030593](https://rinkeby.etherscan.io/address/0x18fA6B478147aA7E2d50828251d57045fa030593#code)
+- **ethereum mainnet**
+  - buffer: [0xA9183BD6FFf2d50398e95a1Bf2FaA98Aff2FBE76](https://etherscan.io/address/0xA9183BD6FFf2d50398e95a1Bf2FaA98Aff2FBE76#code)
+  - stream: [0x88891017548DCFf014EFFAe944D4AB7d2E5Cd8A8](https://etherscan.io/address/0x88891017548DCFf014EFFAe944D4AB7d2E5Cd8A8#code)
+
+
+
+---
+
 # intro
 
 moneypipe is all about controlling the flow of money. there are currently 2 modules:
