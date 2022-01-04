@@ -99,7 +99,8 @@ class buffer {
     let r = await retry(
       async(bail, num) => {
         console.log("trying to fetch merklescript from IPFS...", cid)
-        let merklescript = await axios.get("https://ipfs.io/ipfs/" + cid, {
+        let url = constants.ipfs.replace("{{cid}}", cid)
+        let merklescript = await axios.get(url, {
           timeout: 5000
         }).then((r) => {
           return r.data.merklescript
@@ -313,7 +314,8 @@ class buffer {
       toBlock  : "latest",
     })
     const cid = ipfsh.dtoc(logs[0].returnValues.cid)
-    let merklescript = await axios.get("https://ipfs.io/ipfs/" + cid).then((r) => {
+    let url = constants.ipfs.replace("{{cid}}", cid)
+    let merklescript = await axios.get(url).then((r) => {
       return r.data.merklescript
     })
     return merklescript
