@@ -29,6 +29,7 @@ class stream {
       factory: factory_abi,
       stream: stream_abi
     }
+    this.factory = new this.web3.eth.Contract(factory_abi, constants.factory[this.network])
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   //

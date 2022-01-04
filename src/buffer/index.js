@@ -61,6 +61,7 @@ class buffer {
       factory: factory_abi,
       buffer: buffer_abi
     }
+    this.factory = new this.web3.eth.Contract(factory_abi, constants.factory[this.network]);
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   //
