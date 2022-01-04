@@ -57,6 +57,10 @@ class buffer {
     this.web3 = o.web3;
     this.key = o.key;
     this.network = (o.network ? o.network : "main");
+    this.abi = {
+      factory: factory_abi,
+      buffer: buffer_abi
+    }
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   //
