@@ -520,4 +520,4 @@ let { value, proof } = await buffer.merkleproof(
 console.log(value, proof)
 ```
 
-<iframe width="100%" height="500" src="//jsfiddle.net/skogard/t978xonh/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+<iframe width="100%" height="500" src="//jsfiddle.net/skogard/bzptvqg3/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
