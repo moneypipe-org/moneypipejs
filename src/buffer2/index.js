@@ -249,7 +249,7 @@ class buffer {
   //    let status = await buffer.status(contract_address[, account])
   //
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
-  async status(contract_address, account) {
+  async status(contract_address, account, erc20s) {
     await this.checkNetwork()
     if (!account) account = await this.current_account()
     // withdrawn
@@ -267,11 +267,12 @@ class buffer {
       return val[1]
     })
 
+    const value = (filtered.length > 0 ? filtered[0] : 0)
 
 
-    if (filtered.length > 0) {
-      // ETH
-      let value = filtered[0]
+//    if (filtered.length > 0) {
+//      // ETH
+//      let value = filtered[0]
       let balance = totalReceived
         .times(new BigNumber(value))
         .dividedBy(new BigNumber(10**12))
@@ -306,21 +307,62 @@ class buffer {
         const total_weth_balance_in_eth = total_weth_balance.dividedBy(new BigNumber(Number(10**18).toString()))
         const total_weth_received_in_eth = total_weth_received.dividedBy(new BigNumber(Number(10**18).toString()))
         const user_weth_balance_in_eth = user_weth_balance.dividedBy(new BigNumber(Number(10**18).toString()))
+
+        let e = []
+        if (erc20s) {
+          for(let erc20 of erc20s) {
+            const erc20_contract = new this.web3.eth.Contract([{
+              "constant": true,
+              "inputs": [ { "name": "_owner", "type": "address" } ],
+              "name": "balanceOf",
+              "outputs": [ { "name": "balance", "type": "uint256" } ],
+              "payable": false,
+              "stateMutability": "view",
+              "type": "function"
+            }], erc20)
+
+            const user_erc20_withdrawn = new BigNumber(await contract.methods.token_withdrawn(erc20, account).call())
+            const total_erc20_withdrawn = new BigNumber(await contract.methods.total_token_withdrawn(erc20).call())
+            const total_erc20_balance = new BigNumber(await erc20_contract.methods.balanceOf(contract_address).call())
+            const total_erc20_received = total_erc20_balance.plus(total_erc20_withdrawn)
+            const user_erc20_balance = total_erc20_received
+              .times(value)
+              .dividedBy(new BigNumber(10**12))
+              .minus(user_erc20_withdrawn)
+
+            const user_erc20_withdrawn_in_eth = user_erc20_withdrawn.dividedBy(new BigNumber(Number(10**18).toString()))
+            const total_erc20_withdrawn_in_eth = total_erc20_withdrawn.dividedBy(new BigNumber(Number(10**18).toString()))
+            const total_erc20_balance_in_eth = total_erc20_balance.dividedBy(new BigNumber(Number(10**18).toString()))
+            const total_erc20_received_in_eth = total_erc20_received.dividedBy(new BigNumber(Number(10**18).toString()))
+            const user_erc20_balance_in_eth = user_erc20_balance.dividedBy(new BigNumber(Number(10**18).toString()))
+            e.push({
+              address: erc20,
+              user_erc20_withdrawn, user_erc20_balance,
+              user_erc20_withdrawn_in_eth, user_erc20_balance_in_eth,
+              total_erc20_withdrawn, total_erc20_balance, total_erc20_received,
+              total_erc20_withdrawn_in_eth, total_erc20_balance_in_eth, total_erc20_received_in_eth,
+            })
+          }
+        }
+
         return {
+          member: (filtered.length > 0),
           withdrawn, balance, balanceEth, withdrawnEth, totalReceived, totalReceivedEth,
           user_weth_withdrawn, user_weth_balance,
           user_weth_withdrawn_in_eth, user_weth_balance_in_eth,
           total_weth_withdrawn, total_weth_balance, total_weth_received,
           total_weth_withdrawn_in_eth, total_weth_balance_in_eth, total_weth_received_in_eth,
+          custom_erc20: e
         }
       } catch (e) {
         return {
+          member: (filtered.length > 0),
           withdrawn, balance, balanceEth, withdrawnEth, totalReceived, totalReceivedEth,
         }
       }
-    } else {
-      return null
-    }
+//    } else {
+//      return null
+//    }
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   //
