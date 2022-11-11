@@ -57,6 +57,7 @@ class buffer {
     this.web3 = o.web3;
     this.key = o.key;
     this.network = (o.network ? o.network : "main");
+    this.chainId = o.chainId
     this.abi = {
       factory: factory_abi,
       buffer: buffer_abi
@@ -430,9 +431,16 @@ class buffer {
     return cid
   }
   async checkNetwork() {
-    let net = await this.web3.eth.net.getNetworkType()
-    if (net !== this.network) {
-      throw new Error(`Please sign into ${this.network} network`)
+    if (this.chainId) {
+      let chainId = await this.web3.eth.getChainId()
+      if (chainId.toString() !== this.chainId.toString()) {
+        throw new Error(`Please sign into the EVM network with chainId ${this.chainId}`)
+      }
+    } else {
+      let net = await this.web3.eth.net.getNetworkType()
+      if (net !== this.network) {
+        throw new Error(`Please sign into ${this.network} network`)
+      }
     }
   }
   async current_account () {

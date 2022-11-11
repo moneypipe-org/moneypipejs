@@ -9,6 +9,7 @@ module.exports = {
     goerli: "0xF1BA9c045b01402AFf7d571BF2Ff3322e1EE7972",
     main: "0xF1BA9c045b01402AFf7d571BF2Ff3322e1EE7972",
     mumbai: "0xF1BA9c045b01402AFf7d571BF2Ff3322e1EE7972",
+    polygon: "0xF1BA9c045b01402AFf7d571BF2Ff3322e1EE7972",
 //    rinkeby: "0x6706c0452C82f1d57d25860A129627210438c075",
 //    main: "0xA9183BD6FFf2d50398e95a1Bf2FaA98Aff2FBE76"
   },
@@ -21,11 +22,13 @@ module.exports = {
     goerli: "0xD912512eCA388Daaaf14ee9b8cD9471a789ec66E",
     main: "0xD912512eCA388Daaaf14ee9b8cD9471a789ec66E",
     mumbai: "0xD912512eCA388Daaaf14ee9b8cD9471a789ec66E",
+    polygon: "0xD912512eCA388Daaaf14ee9b8cD9471a789ec66E",
   },
   weth: {
     goerli: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
     main: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
     mumbai: "0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa",
+    polygon: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
   },
   ipfs: "https://ipfs.io/ipfs/{{cid}}",
 //  ipfs: "https://{{cid}}.ipfs.dweb.link"
