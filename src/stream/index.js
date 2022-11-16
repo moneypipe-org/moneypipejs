@@ -112,7 +112,7 @@ class stream {
       let data = action.encodeABI()
       let o = {
         from: wallet.address,
-        to: factory.address,
+        to: factory.options.address,
         data: data,
       }
       let estimate = await action.estimateGas(o)

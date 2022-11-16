@@ -132,7 +132,7 @@ class buffer {
       let data = action.encodeABI()
       let o = {
         from: wallet.address,
-        to: factory.address,
+        to: factory.options.address,
         data: data,
       }
       let estimate = await action.estimateGas(o)
@@ -287,7 +287,7 @@ class buffer {
       const data = action.encodeABI()
       const o = {
         from: account,
-        to: contract.address,
+        to: contract.options.address,
         data: data,
       }
       o.gas = await action.estimateGas(o)
