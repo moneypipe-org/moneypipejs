@@ -324,6 +324,25 @@ let { tx, address } = await buffer2.create({
 - **tx:** the buffer2 creatinon transaction
 - **address:** the contract address for the created buffer2
 
+#### Buffer Management
+
+There are a couple of things to remember:
+
+1. You must pass the `index` attribute when creating. Basically you have an infinite number of addresses assigned to the deployer address, and for every deployment you need to pick ones that haven't already been deployed.
+2. If you try to deploy to an already existing slot (with an existing `index`), it will throw an error, which may look something like:
+
+```
+err: Error: Returned error: execution reverted: ERC1167: create2 failed
+```
+
+To avoid this situation, you may want to:
+
+1. Store the last deployed index somewhere
+2. or, if you don't want to store anything, may want to run through available addresses to find the first available address that hasn't been deployed yet.
+
+> See the `find()` method example section to learn how to find the first available address and deploy
+
+
 #### example
 
 ```javascript
@@ -343,31 +362,114 @@ let { tx, address } = await buffer2.create({
 })
 ```
 
-### 2.3. groups
+### 2.3. find
+
+find buffer2 contract addresses based on a query.
+
+1. Note that the find() method DOES NOT use any RPC or API and therefore does not require a network connection. It's a simple function that **calculates** contract addresses from any creator account.
+2. Because `find()` returns results based on deterministic address calculation and not from some blockchain query, it can even calculate addresses you haven't even deployed yet. This means, just from your address you will know all the future buffer2 contract addresses that will be deployed from the account.
+
+Here's the syntax:
+
 
 #### syntax
 
-Use the constructed buffer2 object:
-
 ```javascript
-let groups = await buffer2.groups(owner_address)
+const addresses = await buffer2.find(query)
 ```
 
-#### parameters
+##### parameters
 
-- **owner_address:** the user address to query all owned buffers from. the current signed-in user address if not specified.
+- `query`: describes the condition to search for
+  - `creator`: the creator address. can be anyone's address.
+  - `start`: the contract start index to filter from (within the creator's namespace)
+  - `count`: the number of results to return
 
-#### return values
+##### return value
 
-- **groups:** the groups array where each item is an object made up of:
-  - **cid:**: IPFS CID at which the merkle tree is stored
-  - **owner:** the owner address
-  - **group:** the buffer2 address
-  - **title:** the buffer2 title
+- `addresses`: an array of contract addresses that match the condition
 
 #### example
 
-<iframe width="100%" height="600" src="//jsfiddle.net/skogard/tqrc8f1y/5/embedded/html,result/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+##### 1. finding 100 first available addresses
+
+This example returns the first 100 buffer2 contract addresses (from index 0 to index 99) for the account `0x502b2FE7Cc3488fcfF2E16158615AF87b4Ab5C41`:
+
+```javascript
+const addresses = await buffer2.find({
+  creator: "0x502b2FE7Cc3488fcfF2E16158615AF87b4Ab5C41",
+  start: 0,
+  count: 100
+})
+```
+
+##### 2. finding 100 first available addresses and checking which one has been deployed
+
+As mentioned above, the `find()` method **computes** addresses instead of querying it from the blockchain.
+
+In the example above, we are querying 100 buffer2 contracts from index 0 to 99, but not all of them may be already deployed.
+
+To check if a buffer at an index has already been deployed or not, you can try the `get(address)` method for each address to see if it throws an error:
+
+```javascript
+const addresses = await buffer2.find({
+  creator: "0x502b2FE7Cc3488fcfF2E16158615AF87b4Ab5C41",
+  start: 0,
+  count: 100
+})
+for(let address of addresses) {
+  try {
+    let group = await buffer2.get(address)
+    console.log("group exists!", group)
+  } catch (e) {
+    console.log("no buffer2 exists at address: ", address)
+  }
+}
+```
+
+##### 3. finding 100 first available addresses and scanning until you find the first one that hasn't been deployed
+
+You can use the similar technique to find the first available address to deploy:
+
+```javascript
+const addresses = await buffer2.find({
+  creator: "0x502b2FE7Cc3488fcfF2E16158615AF87b4Ab5C41",
+  start: 0,
+  count: 100
+})
+
+// Find the first available index
+let availableIndex;
+for(let i=0; i<addresses.length; i++) {
+  let address = addresses[i];
+  try {
+    // this will succeed until it runs into an exception (where the address doesn't exist on chain)
+    let group = await buffer2.get(address)
+  } catch (e) {
+    // set the "available" to the current address since this address doesn't exist on chain
+    availableIndex = i;
+    // break as soon as we find an available address
+    break;
+  }
+}
+
+// Deploy a buffer2 at the first available index
+let { tx, address } = await buffer2.create({
+  index: availableIndex,    // Create a buffer2 at "availableIndex"
+  title: "testing",
+  members: [{
+    account: addr1,
+    value: 1
+  }, {
+    account: addr2,
+    value: 3
+  }, {
+    account: addr3,
+    value: 6
+  }]
+})
+```
+
 
 ### 2.4. get
 
@@ -523,45 +625,4 @@ console.log(value, proof)
 ```
 
 <iframe width="100%" height="500" src="//jsfiddle.net/skogard/bzptvqg3/embedded/html,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
-
-### 2.9. find
-
-find buffer2 contract addresses based on a query
-
->
-> **Note**
->
-> The find() method DOES NOT use any RPC or API and therefore does not require a network connection. It's a simple function that **calculates** contract addresses from any creator account.
-
-Here's the syntax:
-
-
-#### syntax
-
-```javascript
-const addresses = await buffer2.find(query)
-```
-
-##### parameters
-
-- `query`: describes the condition to search for
-  - `creator`: the creator address. can be anyone's address.
-  - `start`: the contract start index to filter from (within the creator's namespace)
-  - `count`: the number of results to return
-
-##### return value
-
-- `addresses`: an array of contract addresses that match the condition
-
-#### example
-
-This example returns the first 100 buffer2 contract addresses (from index 0 to index 99) for the account `0x502b2FE7Cc3488fcfF2E16158615AF87b4Ab5C41`:
-
-```javascript
-const addresses = await c0.collection.find({
-  creator: "0x502b2FE7Cc3488fcfF2E16158615AF87b4Ab5C41",
-  start: 0,
-  count: 100
-})
-```
 
